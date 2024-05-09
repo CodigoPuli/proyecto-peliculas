@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
+import { GuardarEnStorage } from '../helpers/GuardarEnStorage';
 
 export const Crear = () => {
 
   const tituloComponente = "Añadir pelicula";
 
-  const [ peliState, setPeliState ] = useState({
+  const [peliState, setPeliState] = useState({
     titulo: '',
     descripcion: ''
   })
@@ -30,38 +31,17 @@ export const Crear = () => {
     setPeliState(peli)
 
     // Guardar en el almacenamiento Local
-    guardarEnStorage(peli)
-  
-}
-
-  const guardarEnStorage = peli => {
-
-    // Conseguir los elementos que ya tenemos en el LocalStorage
-    let elementos = JSON.parse(localStorage.getItem("pelis"))
-    
-    // Comprobar si es un array 
-    if(Array.isArray(elementos)){
-        // Añadir dentro del array un elemento nuevo
-        elementos.push(peli)
-    }else{ 
-        // Crear un array con la nueva peli
-        elementos = [peli]
-    }
-
-
-    // Guardar en el Localstorage
-    localStorage.setItem("pelis", JSON.stringify(elementos))
-
-    // Devolver objeto guardado
-    return peli
+    GuardarEnStorage("pelis", peli)
 
   }
+
+
 
   return (
     <div className="add">
       <h3 className="title">{tituloComponente}</h3>
       <strong>
-      {(titulo && descripcion) && "Has creado la pelicula: "+titulo}
+        {(titulo && descripcion) && "Has creado la pelicula: " + titulo}
       </strong>
 
       <form onSubmit={conseguirDatosForm}>
